@@ -1,8 +1,13 @@
 import React, { Component } from "react";
-import { Navbar, Container, Nav,NavDropdown } from "react-bootstrap";
+import { Navbar, Container, Nav, NavDropdown } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 export default class NavigationBar extends Component {
+  // componentDidMount() {
+  //   navigator.getBattery().then((battery) => {
+  //     console.log(battery);
+  //   });
+  // }
   render() {
     return (
       <>
@@ -18,6 +23,7 @@ export default class NavigationBar extends Component {
               <Nav.Link as={Link} to="/addarticle">
                 Add Article{" "}
               </Nav.Link>
+              <Nav.Link>{}</Nav.Link>
             </Nav>
             <Navbar.Collapse id="navbarScroll">
               <Nav
@@ -26,11 +32,11 @@ export default class NavigationBar extends Component {
                 navbarScroll
               >
                 <NavDropdown title="Profile" id="navbarScrollingDropdown">
-                  <NavDropdown.Item as={Link} to="/profile">My Profile</NavDropdown.Item>
-                  <NavDropdown.Item>Change Password</NavDropdown.Item>
-                  <NavDropdown.Item>
-                    Logout
+                  <NavDropdown.Item as={Link} to="/profile">
+                    My Profile
                   </NavDropdown.Item>
+                  <NavDropdown.Item>Change Password</NavDropdown.Item>
+                  <NavDropdown.Item>Logout</NavDropdown.Item>
                 </NavDropdown>
               </Nav>
             </Navbar.Collapse>
