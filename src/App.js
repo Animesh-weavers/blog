@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import NavigationBar from "./Component/NavigationBar";
 import AddArticle from "./Component/Page/AddArticle";
 import Articles from "./Component/Page/Articles";
@@ -11,8 +11,9 @@ export default class App extends Component {
       <>
         <NavigationBar />
         <Routes>
+          <Route path="*" element={<Navigate to="/" />} />
           <Route path="/" element={<Articles />} />
-          <Route path="/topicnews" element={<AddArticle />} />
+          <Route path="/addarticle" element={<AddArticle />} />
           <Route path="/profile" element={<Profile />} />
         </Routes>
       </>

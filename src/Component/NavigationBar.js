@@ -15,7 +15,7 @@ export default class NavigationBar extends Component {
               <Nav.Link as={Link} to="/">
                 Articles
               </Nav.Link>
-              <Nav.Link as={Link} to="/topicnews">
+              <Nav.Link as={Link} to="/addarticle">
                 Add Article{" "}
               </Nav.Link>
             </Nav>
