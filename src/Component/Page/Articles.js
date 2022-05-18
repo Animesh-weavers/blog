@@ -25,6 +25,7 @@ export default class Articles extends Component {
             title: res.data[key].title,
             desc: res.data[key].description,
             date: res.data[key].date,
+            time: res.data[key].time,
           });
         }
 
@@ -36,10 +37,7 @@ export default class Articles extends Component {
   }
   render() {
     const { articles } = this.state;
-    // if (articles.length === 0) {
-    //   return <h1>Not found</h1>;
-    // }
-    // console.log(articles);
+
     return (
       <>
         <div
@@ -57,7 +55,11 @@ export default class Articles extends Component {
                 <Card style={{ width: "40rem", margin: "1rem" }} key={index}>
                   <Card.Body>
                     <Card.Title>{item.title}</Card.Title>
-                    <Card.Subtitle>{item.date}</Card.Subtitle>
+                    <Card.Subtitle>
+                      {item.date} {"  "} {"   "}
+                      {item.time}
+                    </Card.Subtitle>
+                    {/* <Card.Subtitle>{item.time}</Card.Subtitle> */}
                     <br />
                     <Card.Text>{item.desc}</Card.Text>
                   </Card.Body>

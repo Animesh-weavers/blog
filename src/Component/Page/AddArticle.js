@@ -1,5 +1,6 @@
-import React, { Component, createRef } from "react";
+import React, { Component } from "react";
 import { Form, Button } from "react-bootstrap";
+import axios from "axios";
 
 export default class AddArticle extends Component {
   constructor() {
@@ -9,36 +10,69 @@ export default class AddArticle extends Component {
     const month = newDate.getMonth() + 1;
     const date = newDate.getDate();
     const time = newDate.toLocaleTimeString();
-    const initStartDate = `${month}/${date}/${year}`;
+    const initStartDate = `${month}.${date}.${year}`;
     this.state = {
       Date: initStartDate,
       title: "",
       desc: "",
       time,
+      isShowLoading: false,
     };
-    this.titleRef = createRef();
-    this.descRef = createRef();
     this.formSubmitHandler = this.formSubmitHandler.bind(this);
+    this.titleChangeHandler = this.titleChangeHandler.bind(this);
+    this.descChangeHandler = this.descChangeHandler.bind(this);
   }
   formSubmitHandler(e) {
     e.preventDefault();
-    this.titleRef.current.value = "";
-    this.descRef.current.value = "";
-    console.log("submit");
-    const enteredTitle = this.titleRef.current.value;
-    const enteredDesc = this.descRef.current.value;
     this.setState({
-      title: enteredTitle,
-      desc: enteredDesc,
+      isShowLoading: true,
     });
-    
+    let headersList = {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    };
+
+    let bodyContent = {
+      title: this.state.title,
+      description: this.state.desc,
+      date: this.state.Date,
+      time: this.state.time,
+    };
+
+    let reqOptions = {
+      url: "https://blogging-d1952-default-rtdb.firebaseio.com/blogs.json",
+      method: "POST",
+      headers: headersList,
+      data: bodyContent,
+    };
+
+    axios(reqOptions)
+      .then(() => {
+        this.setState({
+          isShowLoading: false,
+        });
+        alert("Succesfully Published!!");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    this.setState({
+      title: "",
+      desc: "",
+    });
+  }
+  titleChangeHandler(e) {
+    this.setState({
+      title: e.target.value,
+    });
+  }
+  descChangeHandler(e) {
+    this.setState({
+      desc: e.target.value,
+    });
   }
   render() {
-    // const { title, desc, time, Date } = this.state;
-    // console.log(title);
-    // console.log(desc);
-    // console.log(Date);
-    // console.log(time);
+    const { title, desc, isShowLoading } = this.state;
     return (
       <div>
         <div>
@@ -60,7 +94,8 @@ export default class AddArticle extends Component {
                   type="text"
                   placeholder="Title"
                   required
-                  ref={this.titleRef}
+                  onChange={this.titleChangeHandler}
+                  value={title}
                 />
               </Form.Group>
               <Form.Group
@@ -73,13 +108,17 @@ export default class AddArticle extends Component {
                   rows={3}
                   placeholder="Description"
                   required
-                  ref={this.descRef}
+                  onChange={this.descChangeHandler}
+                  value={desc}
                 />
               </Form.Group>
               <Form.Group style={{ marginTop: "1rem" }}>
-                <Button variant="secondary" type="submit">
-                  Publish
-                </Button>
+                {!isShowLoading && (
+                  <Button variant="secondary" type="submit">
+                    Publish
+                  </Button>
+                )}
+                {isShowLoading && 'Loading...' }
               </Form.Group>
             </Form>
           </div>
