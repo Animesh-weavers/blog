@@ -31,13 +31,13 @@ export default class NavigationBar extends Component {
                 style={{ maxHeight: "100px" }}
                 navbarScroll
               >
-                <NavDropdown title="Profile" id="navbarScrollingDropdown">
+                {/* <NavDropdown title="Profile" id="navbarScrollingDropdown">
                   <NavDropdown.Item as={Link} to="/profile">
                     My Profile
                   </NavDropdown.Item>
                   <NavDropdown.Item>Change Password</NavDropdown.Item>
                   <NavDropdown.Item>Logout</NavDropdown.Item>
-                </NavDropdown>
+                </NavDropdown> */}
               </Nav>
             </Navbar.Collapse>
           </Container>

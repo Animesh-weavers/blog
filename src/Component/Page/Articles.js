@@ -7,9 +7,12 @@ export default class Articles extends Component {
     super();
     this.state = {
       articles: [],
+      isShowLoading: false,
+      res:[]
     };
   }
   componentDidMount() {
+    this.setState({ isShowLoading: true });
     const load = [];
     let reqOptions = {
       url: "https://blogging-d1952-default-rtdb.firebaseio.com/blogs.json",
@@ -18,7 +21,8 @@ export default class Articles extends Component {
 
     axios(reqOptions)
       .then((res) => {
-        // console.log(res.data);
+        this.setState({ isShowLoading: false });
+        this.setState({res:res.request.response})
         for (let key in res.data) {
           load.push({
             id: key,
@@ -36,7 +40,7 @@ export default class Articles extends Component {
       .catch((err) => console.log(err));
   }
   render() {
-    const { articles } = this.state;
+    const { articles, isShowLoading,res } = this.state;
 
     return (
       <>
@@ -50,8 +54,8 @@ export default class Articles extends Component {
           }}
         >
           <div>
-            {articles.length !== 0 &&
-              articles.map((item, index) => (
+            {articles.length !== 0 && 
+              articles?.map((item, index) => (
                 <Card style={{ width: "40rem", margin: "1rem" }} key={index}>
                   <Card.Body>
                     <Card.Title>{item.title}</Card.Title>
@@ -64,8 +68,9 @@ export default class Articles extends Component {
                     <Card.Text>{item.desc}</Card.Text>
                   </Card.Body>
                 </Card>
-              ))}
-            {articles.length === 0 && <h1>Not Found</h1>}
+              ))
+            }
+            {isShowLoading && 'Loading...'}
           </div>
         </div>
       </>
