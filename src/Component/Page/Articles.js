@@ -40,7 +40,7 @@ export default class Articles extends Component {
       .catch((err) => console.log(err));
   }
   render() {
-    const { articles, isShowLoading,res } = this.state;
+    const { articles, isShowLoading } = this.state;
 
     return (
       <>
